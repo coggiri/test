@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>step01_canvas</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            body{
+                margin:0px;
+            }
+            .canvas{
+                border: 1px red solid;
+            }
+        </style>
+        <script type="text/javascript">
+
+            // init canvas
+            var canvas, context, canvasW = 500, canvasH = 500;
+            function init()
+            {
+                canvas = document.getElementById('canvas');
+                canvas.width = canvasW;
+                canvas.height = canvasH;
+                
+                context = canvas.getContext('2d');
+                
+                draw();
+            }
+            
+            function draw()
+            {
+                drawBox();
+                drawLine();
+                drawCircle();
+                
+                drawGuideLine();
+                drawText();
+            }
+              
+                
+            // 1. box
+            function drawBox()
+            {
+                context.beginPath();
+                context.save();
+                
+                context.fillStyle = "#f0f0f0";
+                context.fillRect( 50, 50, 400, 400 );
+                
+                context.restore();
+            }
+            
+            // 2. N
+            var joinList = ["round", "bevel", "miter"], 
+                capList = ["square", "round", "butt"];
+                nColorList = ["#36b702", "#54d520", "#7cf33e"],
+                widthList = [80, 50, 20];
+            var nInfo = {
+                left:140, right:360, top:120, bottom:380
+            };
+            function drawLine()
+            {
+                context.beginPath();
+                context.save();
+                
+                context.moveTo(nInfo.left, nInfo.bottom);
+                context.lineTo(nInfo.left, nInfo.top);
+                context.lineTo(nInfo.right, nInfo.bottom);
+                context.lineTo(nInfo.right, nInfo.top);
+                
+                setNLineStyle(0);
+                context.stroke();
+        
+                setNLineStyle(1);
+                context.stroke();
+                
+                setNLineStyle(2);
+                context.stroke();
+                
+                context.restore();
+            }
+            
+            function setNLineStyle(index)
+            {
+                context.lineWidth = widthList[index];
+                context.lineJoin = joinList[index];
+                context.lineCap = capList[index];
+                context.strokeStyle = nColorList[index];
+            }
+                
+            
+            // 3. circle
+            var nInfo = {
+                left:140, right:360, top:120, bottom:380
+            }
+            function drawCircle()
+            {
+                context.save();
+                context.fillStyle = "rgba(255, 0, 0, 0.4)";
+                fillCircle( nInfo.left, nInfo.bottom );
+                fillCircle( nInfo.left, nInfo.top );
+                fillCircle( nInfo.right, nInfo.bottom );
+                fillCircle( nInfo.right, nInfo.top );
+                
+                context.restore();
+            }
+            function fillCircle(x, y)
+            {
+                var r = 10;
+                var PI_2 = Math.PI * 2;
+                context.beginPath();
+                context.arc( x, y, r, 0, PI_2 );
+                context.fill();
+            }
+
+
+            // 4. guide line
+            function drawGuideLine()
+            {
+                context.save();
+                context.beginPath();
+                
+                context.strokeStyle = "#c00";
+                context.setLineDash([6, 4]);
+                
+                drawHLine( nInfo.top );
+                drawHLine( nInfo.bottom );
+                drawVLine( nInfo.left );
+                drawVLine( nInfo.right );
+                context.restore();
+            }
+            
+            function drawHLine(y)
+            {
+                context.beginPath();
+                context.moveTo(0, y + 0.5);
+                context.lineTo(canvasW, y + 0.5);
+                context.stroke();
+            }
+            function drawVLine(x)
+            {
+                context.beginPath();
+                context.moveTo(x + 0.5, 0);
+                context.lineTo(x + 0.5, canvasH);
+                context.stroke();
+            }
+            
+            // 5. text
+            function drawText()
+            {
+                context.save();
+                
+                var text = "box : #f0f0f0 / (50, 50, 400, 400)";
+                context.fillStyle = "#000";
+//                canvas.dir = "rtl";
+                var x = canvasW / 2;
+                context.font = "18px tahoma";
+                context.textAlign = "center";
+                context.textBaseline = "bottom";
+                context.fillText( text, x, 50 );
+                
+                text = "circle";
+                context.textBaseline = "top";
+                context.fillText( text, x, 50 );
+                
+                text = "(140, 120)";
+                context.textAlign = "right";
+                context.textBaseline = "bottom";
+                context.fillText( text, 140, 120 );
+                
+                
+                context.restore();
+            }
+            
+            
+            
+            
+            
+            
+            window.onload = init;
+            
+            
+        </script>
+        
+    </head>
+    <body>
+        <canvas id="canvas" class="canvas"></canvas>
+        <img src="step01_canvas.png">
+            
+           
+        
+        
+    </body>
+</html>

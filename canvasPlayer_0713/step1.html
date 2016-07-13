@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Canvas</title>
+    <style>
+    body{margin:0}
+    .canvas_item{border:1px solid #f00}
+    </style>
+    <script type="text/javascript">
+      var video, videoW = 500;
+
+      function init(){
+        initCanvas();
+        video = document.getElementById('video');
+
+        video.width =  videoW;
+        video.addEventListener("loadedmetadata",onLoadVideo);
+        video.src = "jaypark2.mp4";    // mp4 모든 브라우저 지원
+      }
+
+      var canvas, context, canvasW, canvasH;
+      function initCanvas(){
+        canvas =  document.getElementById('canvas');
+        context = canvas.getContext('2d');
+        canvas.width =  300;
+        canvas.height = 300;
+
+      }
+
+
+
+      var videoDisplayW, videoDisplayH, videoDuration;
+      var videoRatio;
+      function onLoadVideo(){
+        videoDisplayW = video.videoWidth;
+        videoDisplayH = video.videoHeight;
+        videoDuration = video.duration;
+        videoRatio = videoDisplayH/ videoDisplayW;
+        canvasW = 300;
+        canvasH = canvasW * videoRatio;
+        video.play();
+        //console.log(videoDisplayW,videoDisplayH,videoDuration);
+
+        addEvent();
+
+        startTimer();
+      }
+
+      var timerID;
+      function startTimer(){
+        //requ~는 시간 설정은 없음. 렌더링 할수잇을떄 자동 호출
+        // cpu 점유율 높아져 불러올수 없을떄, 음음음 메모리 낭비 적음
+        timerID = requestAnimationFrame(loop);  //메모리 낭비 방지  settimeout setinterval 시간마다 호출
+      }
+
+      function loop(time){
+        //console.log("loop");
+        draw();
+
+        startTimer();
+
+      }
+
+      function draw(){
+        //imagesource, x, y
+
+        //source ,x,y ,w,h
+        //source sx sy sw sh dz dy dw dh
+        context.drawImage(video,0,0,canvasW,canvasH);   // 실제 사이즈
+        //context.drawImage(video, 500,500,100,100,0,0,200,200);
+      }
+
+
+
+
+      function addEvent(){
+        document.addEventListener("keyup", onKeyUp);
+      }
+
+      function onKeyUp(ke){
+        var keycode = ke.keyCode;
+        //console.log(keycode);
+
+        //toggle
+        if(keycode == 32){
+          if(video.paused){
+            video.play();
+          }else{
+            video.pause();
+          }
+        }
+        //seek
+        if(keycode == 37){
+          videoSeek(-1);
+
+        }else if(keycode == 39){
+          videoSeek(1);
+        }
+
+        //volume
+        if(keycode == 38){
+          setVolume(1);
+        }else if(keycode == 40){
+          setVolume(-1);
+        }
+
+        //speed  가장 큰 장점
+        // < > ?
+        if(keycode ==188){
+          setSpeed(-1);
+        }else if(keycode == 190){
+        setSpeed(1);
+        }else if(keycode ==191){
+          setSpeed(0);
+        }
+
+
+
+      }
+      var seekDist = 2;
+      function videoSeek(dir){
+        var time = video.currentTime + seekDist*dir;
+        time = Math.min(videoDuration, Math.max(0, time));//c최대 최소값
+        video.currentTime = time;
+
+      //  console.log(time);
+      }
+
+      var speedDist =0.1;
+      function setSpeed(dir){
+        var speed = 1;
+        if(dir != 1){
+          speed = video.playbackRate + speedDist * dir;
+        }
+
+        video.palybackRate = speed;
+        //console.log(speed);
+
+      }
+
+
+      var volumeDist = 0.1;
+      function setVolume(dir){
+        var volume = video.volume + volumeDist * dir;
+        volume = Math.min(1, Math.max(0, volume));
+        video.volume = volume;
+
+      //  console.log(volume);
+      }
+
+      window.onload = init;
+    </script>
+  </head>
+  <body>
+
+    <video id="video" class="video_item"></video>
+    <canvas id="canvas" class="canvas_item" ></canvas>
+  </body>
+</html>
