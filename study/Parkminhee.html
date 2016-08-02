@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=2.0,minimum-scale=1.0,user-scalable=yes">
+<meta property="og:image" content="http://gitlab2.uit.nhncorp.com/uploads/group/avatar/360/Untitled-1.png">
+<title>웹표준UI 파트-History</title>
+<style type="text/css">
+/* common */
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,audio,video{margin:0;padding:0}
+body,input,textarea,select,table,button,code{font-family:'나눔고딕',NanumGothic,'돋움',helvetica,AppleSDGothicNeo,sans-serif;;font-size:16px;line-height:1.25em}
+html{font-size:10px;line-height:10px}
+html.font_big{font-size:12px}
+body{position:relative;background-color:#fff;color:#000;-webkit-text-size-adjust:none}
+img,fieldset{border:0}
+img{vertical-align:middle}
+ul,ol{list-style:none}
+i,em,address,cite,dfn{font-style:normal}
+a{color:inherit;text-decoration:none}
+table{border-collapse:collapse}
+table caption{position:static !important;visibility:hidden;overflow:hidden;width:0;height:0;font-size:0;line-height:0}
+hr,.display_n{display:none !important}
+.hc,.u_hc,.u_skip{visibility:hidden;overflow:hidden;position:absolute !important;left:-999px;width:0;height:0;font-size:0;line-height:0}
+.u_vc{display:inline-block;overflow:hidden;position:absolute;width:1px;height:1px;font-size:1px;line-height:1px;text-indent:4px;white-space:nowrap}
+
+/* 타이틀 */
+body{width:100%;min-width:960px;padding-bottom:100px}
+h1{clear:both;position:relative;padding:20px;border-left:4px solid #91aeeb;border-right:4px solid #91aeeb;background:#2f2e38;font-size:20px;color:#fff}
+h1 span{color:#d5e3ff}
+.date{font-size:11px;font-weight:normal;color:#a0a0a8;white-space:nowrap}
+#wrap{width: 100%}
+
+/* 과제 */
+.content{width:920px;margin:0 auto;padding:20px}
+.ex1{width:400px;height:200px;margin-bottom:10px;padding:10px;border:1px solid #000}
+h2{margin:20px 0;padding:10px 0;background-color:#eee;text-align:center}
+strong{display:inline-block;padding:15px 0}
+dl{overflow: hidden;}
+dt{float:left;width:100px;padding-right:20px;text-decoration:underline }
+dd{overflow: hidden}
+
+</style>
+</head>
+<body>
+<div id="wrap">
+    <h1><span> white-space  / word-wrap / word-break</span>-박민희</h1>
+    <div class="content">
+        <section class="sec">
+          <h2>white-space</h2>
+          <p>
+            모든 브라우저 지원(ie는 8부터 지원)
+          </p>
+          <dl>
+            <dt>normal</dt>
+            <dd>일반적인 것, default</dd>
+            <dt>inherit</dt>
+            <dd>말그대로 부모요소로 부터 상속 받는 것(ie8부터)</dd>
+            <dt>nowrap</dt>
+            <dd>줄바꿈을 하지 않는다</dd>
+            <dt>pre</dt>
+            <dd>pre태그와 같은 기능, 마크업에서 앤터로 줄바꿈 한것 만 적용이 되고 넘어가는 것에는 줄바꿈 하지 않는다.
+            공백은 브라우저에 의해 유지된다.</dd>
+            <dt>pre-line</dt>
+            <dd>마크업에서 줄바꿈 한 것이 적용 되면서 width를 넘어가는 텍스트도 자동으로 줄바꿈이 된다</dd>
+            <dt>pre-wrap</dt>
+            <dd>pre-line 과 비슷하다. 공백은 브라우저에 의해 유지된다.</dd>
+            <dt>initial</dt>
+            <dd>속성값을 default 값으로 한다.</dd>
+          </dl>
+          <strong>Original(white-space:normal)</strong>
+          <p class="ex1" style="white-space:normal">
+            All the times that you rain on my parade And all the clubs you get in using my name You think you broke my heart Ohhh girl for goodness sake You think I'm crying Oh my ohhh, well I ain't!
+          </p>
+          <strong>white-space:nowrap</strong>
+          <p class="ex1" style="white-space:nowrap">
+            All the times that you rain on my parade And all the clubs you get in using my name You think you broke my heart Ohhh girl for goodness sake You think I'm crying Oh my ohhh, well I ain't!
+          </p>
+          <strong>white-space:pre</strong>
+          <p class="ex1" style="white-space:pre">
+            All the times that you rain on my parade And all the clubs you get in using my name You think
+             you broke my heart Ohhh girl for goodness sake You think I'm crying Oh my ohhh, well I ain't!
+           </p>
+           <strong>white-space:pre-line</strong>
+           <p class="ex1" style="white-space:pre-line">
+             All the times that you rain on my parade And all the clubs you get in using my name You think
+             you broke my heart Ohhh girl for goodness sake You think I'm crying Oh my ohhh, well I ain't!
+           </p>
+           <strong>white-space:pre-wrap</strong>
+           <p class="ex1" style="white-space:pre-wrap">
+             All the times that you rain on my parade And all the clubs you get in using my name You think
+             you broke my heart Ohhh girl for goodness sake You think I'm crying Oh my ohhh, well I ain't!
+           </p>
+        </section>
+        <section class="sec2">
+          <h2>word-break</h2>
+          <p>
+            word-break는 말 그대로 단어를 자르는것. 기본적으로 줄이 넘어갈 때는 단어 단위로 잘려서 넘어가게 되어있다.(default)
+            띄어 쓰기를 하지 않고 글을 쓴다면 한 단어로 인식해서 width를 넘어가도 줄바꿈이 되지 않는다.
+            그럴 때 word-break를 사용해주면 줄바꿈이 가능해진다.<br>
+            모든 브라우저 지원
+          </p>
+          <dl>
+            <dt>normal</dt>
+            <dd>일반적인 것, default<br>
+                normal이 기본값, 단어 단위로 끊어서 줄바꿈 한다.(단어 단위로 줄바꿈되어 오른쪽 공간이 꽉차지 않고 비어있는 형태다.)
+            </dd>
+            <dt>inherit</dt>
+            <dd>말그대로 부모요소로 부터 상속 받는 것(ie8부터)</dd>
+            <dt>break-all</dt>
+            <dd>글자 단위로 줄바꿈 한다.(글자단위로 줄바꿈이 되어 글자가 박스 안에서 가득차는 형태다.)</dd>
+            <dt>keep-all </dt>
+            <dd>한글일 경우 띄어쓰기 기준으로 줄바꿈 해준다. (ie계열/아시아 언어만 지원,파폭 3.5이상에서는 지원)</dd>
+            <dt>initial</dt>
+            <dd>속성값을 default 값으로 한다.</dd>
+          </dl>
+          <strong>Original(word-break:normal)</strong>
+          <p class="ex1" style="word-break:normal">
+            All the times that you rain on my parade And all the clubs you get in using my name You think you broke my heart Ohhh girl for goodness sake You think I'm crying Oh my ohhh, well I ain't!
+          </p>
+          <p class="ex1" style="word-break:normal">
+            아무리 기다려도 난 못가 바보처럼 울고 있는 너에 곁에 상처만 주는 나를 왜 모르고 기다리니 떠나가란 말야 보고싶다 보고싶다이런 내가 미워질만큼 울고싶다 네게 무릎 꿇고 모두 없던일이 될수 있다면 미칠듯 사랑했던 기억이          </p>
+          </p>
+          <strong>word-break:break-all</strong>
+          <p class="ex1" style="word-break:break-all">
+            All the times that you rain on my parade And all the clubs you get in using my name You think you broke my heart Ohhh girl for goodness sake You think I'm crying Oh my ohhh, well I ain't!
+          </p>
+          <p class="ex1" style="word-break:break-all">
+            아무리 기다려도 난 못가 바보처럼 울고 있는 너에 곁에 상처만 주는 나를 왜 모르고 기다리니 떠나가란 말야 보고싶다 보고싶다이런 내가 미워질만큼 울고싶다 네게 무릎 꿇고 모두 없던일이 될수 있다면 미칠듯 사랑했던 기억이          </p>
+          </p>
+          <strong>word-break:keep-all</strong>
+          <p class="ex1" style="word-break:keep-all">
+            All the times that you rain on my parade And all the clubs you get in using my name You think you broke my heart Ohhh girl for goodness sake You think I'm crying Oh my ohhh, well I ain't!
+          </p>
+          <p class="ex1" style="word-break:keep-all">
+            아무리 기다려도 난 못가 바보처럼 울고 있는 너에 곁에 상처만 주는 나를 왜 모르고 기다리니 떠나가란 말야 보고싶다 보고싶다이런 내가 미워질만큼 울고싶다 네게 무릎 꿇고 모두 없던일이 될수 있다면 미칠듯 사랑했던 기억이          </p>
+          </p>
+           <strong>참조</strong>
+           <ul>
+             <li><a href="#">http://htglss.tistory.com/31</a></li>
+             <li><a href="#">http://maen2001.tistory.com/category/HTML/CSS</a></li>
+             <li><a href="#">http://www.w3schools.com/cssref/css3_pr_word-break.asp</a></li>
+           </ul>
+        </section>
+        <section class="sec3">
+          <h2>word-wrap</h2>
+          <p>
+            word-wrap속성은 긴 텍스트를 강제로 끊어 줄바꿈 해주는 속성이다.(overflow속성과 비슷함)
+            끊어질 수 없는 주소 같은 문자열을 끊을 때 사용.
+            <strong>word-wrap속성은 비아시아 언어의 줄바꿈 제어/아시아언어(중국어,일본어,한국어)의 줄바꿈은 word-break 속성을 이용</strong>
+          </p>
+          <dl>
+            <dt>normal</dt>
+            <dd>일반적인 것, default<br>
+                글자가 길어도 끊어지지 않고 한줄에 계속 표시
+            </dd>
+            <dt>inherit</dt>
+            <dd>말그대로 부모요소로 부터 상속 받는 것(ie8부터)</dd>
+            <dt>initial</dt>
+            <dd>속성값을 default 값으로 한다.</dd>
+            <dt>break-word</dt>
+            <dd>강제로 끊어서 줄바꿈함</dd>
+          </dl>
+          <strong>Original(word-wrap:	normal)</strong>
+          <p class="ex1" style="word-wrap:normal">
+            abcdefthijklmnopqrstuvwxyzabcdefthijklmnopqrstuvwxyzabcdefthijklmnopqrstu
+          </p>
+          <strong>word-wrap:break-word;</strong>
+          <p class="ex1" style="word-wrap:break-word;">
+            This paragraph has long words thisisaveryverylongwordthatisntreallyoneword and again a longwordwithnospacesinit
+          </p>
+          <strong>참조</strong>
+          <ul>
+            <li><a href="#">http://maen2001.tistory.com/category/HTML/CSS</a></li>
+            <li><a href="#"></a></li>
+          </ul>
+        </section>
+
+    </div>
+
+</div>
+</body>
+</html>
